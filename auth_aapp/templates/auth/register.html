@@ -1,0 +1,78 @@
+{% extends 'layouts/app.html' %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+    <div class="col-sm-6">
+        <h2 class="text-muted mb-4">Register</h2>
+
+        <!-- Registration Form -->
+        <form method="POST" action="{% url 'register' %}">
+            {% csrf_token %}
+
+            <!-- Display Form-Wide Errors -->
+            {% if form.non_field_errors %}
+                <div class="alert alert-danger">
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+
+            <!-- Username Field -->
+            <div class="form-group mb-3">
+                <label for="{{ form.username.id_for_label }}">Username:</label>
+                <input
+                    type="text"
+                    id="{{ form.username.id_for_label }}"
+                    name="{{ form.username.name }}"
+                    class="form-control"
+                    value="{{ form.username.value }}"
+                    required
+                    minlength="3"
+                />
+                {% if form.username.errors %}
+                    <span class="text-danger">{{ form.username.errors }}</span>
+                {% endif %}
+            </div>
+
+            <!-- Password Field -->
+            <div class="form-group mb-3">
+                <label for="{{ form.password1.id_for_label }}">Password:</label>
+                <input
+                    type="password"
+                    id="{{ form.password1.id_for_label }}"
+                    name="{{ form.password1.name }}"
+                    class="form-control"
+                    required
+                    minlength="8"
+                />
+                {% if form.password1.errors %}
+                    <span class="text-danger">{{ form.password1.errors }}</span>
+                {% endif %}
+            </div>
+
+            <!-- Re-Type Password Field -->
+            <div class="form-group mb-3">
+                <label for="{{ form.password2.id_for_label }}">Re-Type Password:</label>
+                <input
+                    type="password"
+                    id="{{ form.password2.id_for_label }}"
+                    name="{{ form.password2.name }}"
+                    class="form-control"
+                    required
+                    minlength="8"
+                />
+                {% if form.password2.errors %}
+                    <span class="text-danger">{{ form.password2.errors }}</span>
+                {% endif %}
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn btn-dark w-100 mb-2">Submit</button>
+
+            <!-- Link to Login Page -->
+            <a href="{% url 'login' %}" class="btn btn-secondary w-100">Already have an account? Login</a>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
